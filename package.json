@@ -1,0 +1,29 @@
+{
+  "name": "heads-and-tails-cli",
+  "version": "1.0.0",
+  "description": "Heads and tails game implemented as a console application using node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igorklyopov/heads-and-tails-cli.git"
+  },
+  "keywords": [
+    "heads and tails",
+    "game",
+    "cli",
+    "node.js"
+  ],
+  "author": "Igor Klyopov <shoot8202@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igorklyopov/heads-and-tails-cli/issues"
+  },
+  "homepage": "https://github.com/igorklyopov/heads-and-tails-cli#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^8.3.0"
+  }
+}
