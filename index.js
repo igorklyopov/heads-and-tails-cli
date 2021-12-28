@@ -16,7 +16,8 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-let count = 0;
+let setCount = 0,
+  roundCount = 0;
 const logFile = program.opts().file;
 
 const coinToss = () =>
@@ -41,8 +42,10 @@ const showResults = async () => {
 };
 //////////////////////////////
 
+const inputFormatter = (value) => value.trim().toLowerCase();
+
 rl.question('Let`s play? (enter yes to start) ', (answer) => {
-  if (answer.toLowerCase() !== 'yes') {
+  if (inputFormatter(answer) !== 'yes') {
     console.log('Game over');
 
     showResults();
@@ -56,37 +59,37 @@ rl.question('Let`s play? (enter yes to start) ', (answer) => {
 
 const game = () => {
   rl.question('Are you ready to rumble? ', (answer) => {
-    if (answer.toLowerCase() !== 'yes') {
+    if (inputFormatter(answer) !== 'yes') {
       console.log('Game over');
 
-      log(`Number of coin tosses ${count}`).finally(() => rl.close());
+      log(`Number of coin tosses ${setCount}`).finally(() => rl.close());
 
       showResults();
 
       return;
     }
 
-    count += 1;
+    setCount += 1;
     const coinTossValue = coinToss();
 
     console.log('coinToss', coinTossValue);
 
     rl.question('Enter heads or tails: '.yellow, (value) => {
-      if (value === coinTossValue) {
+      if (inputFormatter(value) === coinTossValue) {
         console.log(`Congratulations, you won - it was ${coinTossValue}`.green);
         log(
-          `Set ${count}. Coin toss: ${coinTossValue}, your answer: ${value}. You won!`
+          `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. You won!`
         );
       } else {
         console.log(`You guessed wrong - it was ${coinTossValue}`.red);
 
         log(
-          `Set ${count}. Coin toss: ${coinTossValue}, your answer: ${value}. Casino won!`
+          `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. Casino won!`
         );
       }
 
-      if (count === 5) {
-        log(`Number of coin tosses ${count}`).finally(() => rl.close());
+      if (setCount === 5) {
+        log(`Number of coin tosses ${setCount}`).finally(() => rl.close());
 
         console.log('Game over');
 

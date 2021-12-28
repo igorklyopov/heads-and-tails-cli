@@ -1,3 +1,0 @@
-Set 1. Coin toss: tails, your answer: heads. Casino won!
-Set 2. Coin toss: heads, your answer: heads. You won!
-Number of coin tosses 2
