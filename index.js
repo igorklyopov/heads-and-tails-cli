@@ -2,6 +2,8 @@ const readline = require('readline');
 const fs = require('fs/promises');
 const { program } = require('commander');
 require('colors');
+const path = require('path');
+const resultsPath = path.join(__dirname, 'results.txt');
 
 program.option(
   '-f, --file [type]',
@@ -20,10 +22,11 @@ let setCount = 0,
   roundCount = 0;
 const logFile = program.opts().file;
 
+/////////////////////////////////////
 const coinToss = () =>
   Math.floor(Math.random() * 2) === 1 ? 'heads' : 'tails';
 
-const log = async (data) => {
+const makeLogFile = async (data) => {
   try {
     await fs.appendFile(logFile, `${data}\n`);
   } catch (err) {
@@ -31,71 +34,108 @@ const log = async (data) => {
   }
 };
 
-///////////////////////////////
+const clearLogFile = async () => {
+  try {
+    await fs.truncate(resultsPath, 0);
+  } catch (error) {
+    console.log(`Failed to clear file ${logFile}`.red);
+  }
+};
 
-const path = require('path');
-const resultsPath = path.join(__dirname, 'results.txt');
+const removeLogFile = async () => {
+  try {
+    await fs.unlink(resultsPath);
+  } catch (error) {
+    console.log(`Failed to remove file ${logFile}`.red);
+  }
+};
 
 const showResults = async () => {
-  const results = await fs.readFile('./results.txt', 'utf-8');
+  const results = await fs.readFile(resultsPath, 'utf-8');
   console.log(results);
 };
-//////////////////////////////
 
 const inputFormatter = (value) => value.trim().toLowerCase();
 
-rl.question('Let`s play? (enter yes to start) ', (answer) => {
+const startNewRound = () => {
+  rl.question('Another round? (enter yes to start) '.cyan, async (answer) => {
+    if (inputFormatter(answer) !== 'yes') {
+      console.log('Game over. Thanks for playing!'.blue);
+
+      await showResults();
+      removeLogFile();
+      rl.close();
+      return;
+    } else {
+      setCount = 0;
+      roundCount += 1;
+      console.log(`Round ${roundCount}`.green);
+
+      clearLogFile();
+      game();
+    }
+  });
+};
+/////////////////////////////////////
+
+rl.question('Let`s play? (enter yes to start) '.cyan, (answer) => {
   if (inputFormatter(answer) !== 'yes') {
-    console.log('Game over');
+    console.log('Game over'.blue);
 
-    showResults();
-
+    removeLogFile();
     rl.close();
     return;
-  }
+  } else {
+    roundCount += 1;
+    console.log(`Round ${roundCount}`.green);
 
-  game();
+    game();
+  }
 });
 
 const game = () => {
-  rl.question('Are you ready to rumble? ', (answer) => {
+  rl.question('Are you ready to rumble? '.cyan, async (answer) => {
     if (inputFormatter(answer) !== 'yes') {
-      console.log('Game over');
+      console.log(`Round ${roundCount} over`.blue);
 
-      log(`Number of coin tosses ${setCount}`).finally(() => rl.close());
+      makeLogFile(`Number of coin tosses ${setCount}`);
 
-      showResults();
+      await showResults();
+      clearLogFile();
+      startNewRound();
 
       return;
     }
 
     setCount += 1;
+
     const coinTossValue = coinToss();
 
     console.log('coinToss', coinTossValue);
 
-    rl.question('Enter heads or tails: '.yellow, (value) => {
+    rl.question('Enter heads or tails: '.yellow, async (value) => {
       if (inputFormatter(value) === coinTossValue) {
         console.log(`Congratulations, you won - it was ${coinTossValue}`.green);
-        log(
+
+        makeLogFile(
           `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. You won!`
         );
       } else {
         console.log(`You guessed wrong - it was ${coinTossValue}`.red);
 
-        log(
+        makeLogFile(
           `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. Casino won!`
         );
       }
 
       if (setCount === 5) {
-        log(`Number of coin tosses ${setCount}`).finally(() => rl.close());
+        makeLogFile(`Number of coin tosses ${setCount}`);
 
-        console.log('Game over');
+        console.log(`Round ${roundCount} over`.blue);
 
-        showResults();
-
-        return;
+        await showResults();
+        clearLogFile();
+        startNewRound();
       } else {
         game();
       }
