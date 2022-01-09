@@ -71,9 +71,6 @@ const game = () => {
         console.log(`Round ${roundCount} over`.blue);
 
         writeRoundStatistics(setCount, playerWinsCount, casinoWinsCount);
-        // makeLogFile(`Number of coin tosses ${setCount}`);
-        // makeLogFile(`${playerWinsCount} sets you won.`);
-        // makeLogFile(`${casinoWinsCount} sets won by the casino.`);
 
         await showResults();
         clearLogFile();
@@ -109,9 +106,6 @@ const game = () => {
 
         if (setCount === 5) {
           writeRoundStatistics(setCount, playerWinsCount, casinoWinsCount);
-          // makeLogFile(`Number of coin tosses ${setCount}`);
-          // makeLogFile(`${playerWinsCount} sets you won.`);
-          // makeLogFile(`${casinoWinsCount} sets won by the casino.`);
 
           console.log(`Round ${roundCount} over`.blue);
 
