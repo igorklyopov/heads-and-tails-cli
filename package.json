@@ -4,7 +4,9 @@
   "description": "Heads and tails game implemented as a console application using node.js",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "editorconfig":"editorconfig-checker",
+    "test": "npm run editorconfig"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,8 @@
   "dependencies": {
     "colors": "^1.4.0",
     "commander": "^8.3.0"
+  },
+  "devDependencies": {
+    "editorconfig-checker": "^4.0.2"
   }
 }
