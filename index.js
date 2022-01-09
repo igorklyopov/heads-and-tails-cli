@@ -8,6 +8,7 @@ const {
   clearLogFile,
   removeLogFile,
 } = require('./game-functions/logFileFunctions');
+const writeRoundStatistics = require('./game-functions/writeRoundStatistics');
 const coinToss = require('./game-functions/coinToss');
 const showResults = require('./game-functions/showResults');
 const inputFormatter = require('./utils/inputFormatter');
@@ -20,7 +21,9 @@ const rl = readline.createInterface({
 });
 
 let setCount = 0,
-  roundCount = 0;
+  roundCount = 0,
+  casinoWinsCount = 0,
+  playerWinsCount = 0;
 
 rl.question('Let`s play? (enter yes to start) '.cyan, (answer) => {
   if (inputFormatter(answer) !== 'yes') {
@@ -48,7 +51,10 @@ const startNewRound = () => {
       return;
     } else {
       setCount = 0;
+      casinoWinsCount = 0;
+      playerWinsCount = 0;
       roundCount += 1;
+
       console.log(`Round ${roundCount}`.green);
 
       clearLogFile();
@@ -64,7 +70,10 @@ const game = () => {
       if (inputFormatter(answer) !== 'yes') {
         console.log(`Round ${roundCount} over`.blue);
 
-        makeLogFile(`Number of coin tosses ${setCount}`);
+        writeRoundStatistics(setCount, playerWinsCount, casinoWinsCount);
+        // makeLogFile(`Number of coin tosses ${setCount}`);
+        // makeLogFile(`${playerWinsCount} sets you won.`);
+        // makeLogFile(`${casinoWinsCount} sets won by the casino.`);
 
         await showResults();
         clearLogFile();
@@ -83,11 +92,15 @@ const game = () => {
             `Congratulations, you won - it was ${coinTossValue}`.green
           );
 
+          playerWinsCount += 1;
+
           makeLogFile(
             `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. You won!`
           );
         } else {
           console.log(`You guessed wrong - it was ${coinTossValue}`.red);
+
+          casinoWinsCount += 1;
 
           makeLogFile(
             `Set ${setCount}. Coin toss: ${coinTossValue}, your answer: ${value}. Casino won!`
@@ -95,7 +108,10 @@ const game = () => {
         }
 
         if (setCount === 5) {
-          makeLogFile(`Number of coin tosses ${setCount}`);
+          writeRoundStatistics(setCount, playerWinsCount, casinoWinsCount);
+          // makeLogFile(`Number of coin tosses ${setCount}`);
+          // makeLogFile(`${playerWinsCount} sets you won.`);
+          // makeLogFile(`${casinoWinsCount} sets won by the casino.`);
 
           console.log(`Round ${roundCount} over`.blue);
 
