@@ -1,7 +1,5 @@
 const readline = require('readline');
-const fs = require('fs/promises');
 require('colors');
-const path = require('path');
 
 const {
   makeLogFile,
@@ -12,8 +10,6 @@ const writeRoundStatistics = require('./game-functions/writeRoundStatistics');
 const coinToss = require('./game-functions/coinToss');
 const showResults = require('./game-functions/showResults');
 const inputFormatter = require('./utils/inputFormatter');
-
-const resultsPath = path.join(__dirname, 'results.txt');
 
 const rl = readline.createInterface({
   input: process.stdin,

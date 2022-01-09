@@ -24,9 +24,9 @@ Then the utility offers to play another round or complete the game. If the playe
 
 - To start game:
 
-```sh
-npm run start
-```
+  ```sh
+  npm run start
+  ```
 
 ---
 
