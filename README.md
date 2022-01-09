@@ -1,5 +1,7 @@
 # heads-and-tails-cli
 
+[![](https://github.com/igorklyopov/heads-and-tails-cli/workflows/EditorConfig/badge.svg)](https://github.com/igorklyopov/heads-and-tails-cli/actions?query=workflow%3AEditorConfig)
+
 ## Description
 
 Console game (utility) "Heads or Tails" (CLI-game). The CLI prompts the user to play a game. If he agrees, a round of five throws is played. The "coin toss" is carried out by entering the answer to the question: Are you ready to rumble? - yes. If the user enters anything other than yes, the round ends. The CLI then prompts the user to choose - heads or tails.
