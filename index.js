@@ -4,7 +4,7 @@ require('colors');
 const {
   makeLogFile,
   clearLogFile,
-  removeLogFile,
+  removeLogFile
 } = require('./game-functions/logFileFunctions');
 const writeRoundStatistics = require('./game-functions/writeRoundStatistics');
 const coinToss = require('./game-functions/coinToss');
@@ -13,21 +13,19 @@ const inputFormatter = require('./utils/inputFormatter');
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 });
 
-let setCount = 0,
-  roundCount = 0,
-  casinoWinsCount = 0,
-  playerWinsCount = 0;
+let setCount = 0;
+let roundCount = 0;
+let casinoWinsCount = 0;
+let playerWinsCount = 0;
 
 rl.question('Let`s play? (enter yes to start) '.cyan, (answer) => {
   if (inputFormatter(answer) !== 'yes') {
     console.log('Game over'.blue);
 
-    removeLogFile();
     rl.close();
-    return;
   } else {
     roundCount += 1;
     console.log(`Round ${roundCount}`.green);
@@ -44,7 +42,6 @@ const startNewRound = () => {
       await showResults();
       removeLogFile();
       rl.close();
-      return;
     } else {
       setCount = 0;
       casinoWinsCount = 0;
