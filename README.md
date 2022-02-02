@@ -1,6 +1,8 @@
 # heads-and-tails-cli
 
-[![](https://github.com/igorklyopov/heads-and-tails-cli/workflows/EditorConfig/badge.svg)](https://github.com/igorklyopov/heads-and-tails-cli/actions?query=workflow%3AEditorConfig)
+[![EditorConfig](https://github.com/igorklyopov/heads-and-tails-cli/workflows/EditorConfig/badge.svg)](https://github.com/igorklyopov/heads-and-tails-cli/actions?query=workflow%3AEditorConfig) [![Lint Code Base](https://github.com/igorklyopov/heads-and-tails-cli/actions/workflows/super-linter.yml/badge.svg)](https://github.com/igorklyopov/heads-and-tails-cli/actions/workflows/super-linter.yml)
+
+
 
 ## Description
 
