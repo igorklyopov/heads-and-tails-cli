@@ -7,8 +7,10 @@ const writeRoundStatistics = (setCount, playerWinsCount, casinoWinsCount) => {
 
   if (playerWinsCount - casinoWinsCount > 0) {
     makeLogFile('You won this round. Congratulations :)!');
-  } else {
+  } else if (playerWinsCount - casinoWinsCount < 0) {
     makeLogFile('Casino wins this round.');
+  } else {
+    makeLogFile('There are no winners in the round.');
   }
 };
 

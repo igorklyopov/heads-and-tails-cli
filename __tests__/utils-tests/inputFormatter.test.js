@@ -5,6 +5,10 @@ describe('inputFormatter util', () => {
     expect(inputFormatter('   without spaces   ')).toBe('without spaces');
   });
 
+  test('should return an empty string', () => {
+    expect(inputFormatter('     ')).toBe('');
+  });
+
   test('should return string in lowercase', () => {
     expect(inputFormatter('UPPERCASE')).toBe('uppercase');
   });
