@@ -14,12 +14,12 @@ Then the utility offers to play another round or complete the game. If the playe
 
 ## Prerequisites
 
-1. Latest LTS version of NodeJS
+1. Latest LTS version of Node.js
 2. npm >= 7
 
 ## How to use
 
-- Download or clone the repo.
+- Download or clone the repository.
 - Install the game:
 
   ```sh
